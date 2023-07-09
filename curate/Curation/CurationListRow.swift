@@ -58,9 +58,9 @@ struct CurationListRow: View {
             
             VStack(alignment: .center, spacing:0){
                 Spacer().frame(height: childExpanded ? 80 : 0)
-                // "Curation"
+                // "Curation", (+),  (x)
                 HStack(alignment: .top){
-                    Text("Curation")
+                    Text(childExpanded ? "Curation by \(userName)" : "Curation")
                         .italic()
                         .opacity(0.75)
                         .padding(1)
@@ -106,13 +106,14 @@ struct CurationListRow: View {
                 }
             
                 
-                // Title + Description + Albums
+                // Title, Description
                 TitleDescription(title, description, textColor)
                 
-                Spacer()
-                Spacer().frame(height: childExpanded ? 20 : 0)
+                
+                // Expanded View
                 if childExpanded{
-                    
+                    Spacer().frame(height: 20)
+                    // Suggest Track Button
                     Button(){
                         trackSearchPresented = true
                         
@@ -128,13 +129,16 @@ struct CurationListRow: View {
                             .foregroundColor(Color(textColor))
                             .cornerRadius(20)
                     )
-                    .sheet(isPresented: $trackSearchPresented){
-                        SongSearch(curation: curation, isPresented: $trackSearchPresented, trackListVM: TrackListViewModel(spotifyController))
-                    }
                     
+                    Spacer().frame(height: 20)
                     
-                    Spacer().frame(height: childExpanded ? 40 : 0)
+                    // Genre list
+                    GenreSearchList(tags: Genre.allGenres)
+  
                     
+                    Spacer().frame(height: 20)
+                    
+                    // Tracks
                     ScrollView{
                         LazyVStack{
                             ForEach(curation.tracksWithRanks.indices, id: \.self){ idx in
@@ -143,26 +147,26 @@ struct CurationListRow: View {
                         }
                     }
                     
+                    // Track Search
+                    .sheet(isPresented: $trackSearchPresented){
+                        SongSearch(curation: curation, isPresented: $trackSearchPresented, trackListVM: TrackListViewModel(spotifyController))
+                    }
+                    
                 }
                 else{
 //                    MiniAlbumScrollView(tracks: tracksWithRanks.map{$0.0})
-                }
-                
-                    
-
-                Spacer()
-                
-                // User Name + Genres
-                HStack(spacing: 0){
-                    Text(userName)
-                        .font(.caption2)
-                        .foregroundColor(Color(textColor))
                     Spacer()
-                    GenreTags(genreTags: tags, thresh: 250)
-                    Spacer()
-                        .frame(width: 20)
+                    // User Name + Genres
+                    HStack(spacing: 0){
+                        Text(userName)
+                            .font(.caption2)
+                            .foregroundColor(Color(textColor))
+                        Spacer()
+                        GenreTags(genreTags: tags, thresh: 250)
+                        Spacer()
+                            .frame(width: 20)
+                    }
                 }
-
 
             }
             .padding()

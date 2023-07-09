@@ -10,12 +10,13 @@ import SwiftUI
 
 struct GenreSearchList: View {
     
-    private var horizPad = 25.0
+    var tags: [Genre]
+    var horizPad = 25.0
     var body: some View {
         HStack{
             ScrollView(.horizontal, showsIndicators: false){
                 HStack{
-                    ForEach(Genre.allGenres){ genre in
+                    ForEach(tags){ genre in
                         Text(genre.name)
                             .fontWeight(.bold)
                             .padding(.horizontal, 10.0)
@@ -40,6 +41,6 @@ struct GenreSearchList: View {
 
 struct GenreSearchList_Previews: PreviewProvider {
     static var previews: some View {
-        GenreSearchList()
+        return GenreSearchList(tags: Genre.allGenres)
     }
 }

@@ -23,7 +23,7 @@ struct RequestsView: View {
                     .font(.body)
                     .foregroundColor(Color("fgColor"))
                 
-                GenreSearchList()
+                GenreSearchList(tags: Genre.allGenres)
                 
                 Spacer().frame(height: 10)
                 
