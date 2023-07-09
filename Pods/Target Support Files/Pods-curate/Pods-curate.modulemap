@@ -1,0 +1,6 @@
+framework module Pods_curate {
+  umbrella header "Pods-curate-umbrella.h"
+
+  export *
+  module * { export * }
+}

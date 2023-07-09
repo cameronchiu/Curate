@@ -1,0 +1,20 @@
+PODS:
+  - SwiftUIIntrospect (0.7.0)
+  - UIImageColors (2.1.0)
+
+DEPENDENCIES:
+  - SwiftUIIntrospect
+  - UIImageColors
+
+SPEC REPOS:
+  trunk:
+    - SwiftUIIntrospect
+    - UIImageColors
+
+SPEC CHECKSUMS:
+  SwiftUIIntrospect: 22e0d86711f28242c7a24e257cb71fc543a49d30
+  UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
+
+PODFILE CHECKSUM: a9fe81b320ce663f093991ab0e0c90670e281243
+
+COCOAPODS: 1.12.1
