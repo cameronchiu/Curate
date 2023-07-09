@@ -55,7 +55,7 @@ struct SongSearch: View {
             }.listStyle(.plain)
                 .searchable(text: $searchText)
                 .onChange(of: searchText) { value in
-                    if !value.isEmpty &&  value.count > 3 {
+                    if !value.isEmpty &&  value.count >= 2 {
                         trackListVM.search(name: value)
                     } else {
                         trackListVM.tracks.removeAll()

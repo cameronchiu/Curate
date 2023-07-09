@@ -14,6 +14,7 @@ struct NavBar: View {
 
     static let pages: [String] = ["ExplorePage", "HomePage"]
     let content = ContentStream()
+//    let query = Query()
     @State private var isExpanded = false
     @StateObject var spotifyController = SpotifyController()
     @State private var selectedTab = "RequestsPage"
@@ -39,10 +40,6 @@ struct NavBar: View {
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification), perform: { _ in
                         spotifyController.connect()
                     })
-//                SongSearch(spotifyController: spotifyController, trackListVM: TrackListViewModel(spotifyController))
-//                    .tabItem{
-//                        Image(systemName: "magnifyingglass")
-//                    }
             }
             .toolbarBackground(Color("fgColor"), for: .navigationBar)
             .toolbarBackground(.visible, for: .tabBar)

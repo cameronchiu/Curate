@@ -2,32 +2,7 @@ import Foundation
 import PostgresClientKit
 
 struct Track: Codable {
-//    static func get(byId id: String) -> Track{
-//        do{
-//            var config = PostgresClientKit.ConnectionConfiguration()
-//            config.host = "34.27.158.99"
-//            config.database = "curate_db"
-//            config.user = "basic"
-//            config.credential = .scramSHA256(password: "/]M~fgUo0sj`I?LI")
-//            let connection = try PostgresClientKit.Connection(configuration: config)
-//            let text = "SELECT (id, name, album_id, preview_url, url) FROM tracks WHERE id = $1"
-//            let statement = try connection.prepareStatement(text: text)
-//
-//            let cursor = try statement.execute(parameterValues: [id])
-//            let columns = cursor.first.get().columns
-//            // extract
-//            let id = try columns[0].string()
-//            let name = try columns[1].string()
-//            let album_id = try columns[2].string()
-//            let preview_url = try columns[4].string()
-//            let url = try columns[4].string()
-            
-//        }
-//        catch {
-//            print(error)
-//        }
-//    }
-    
+
     func addToDB() {
         do{
             
