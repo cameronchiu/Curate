@@ -31,9 +31,10 @@ class Curation: Identifiable, ObservableObject{
                     let album_name = try columns[5].string()
                     let album_type = try columns[6].string()
                     let total_tracks = try columns[7].int()
+                    let image = try columns[8].string()
                     
                     // album object
-                    let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks)
+                    let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks, image: image)
                     
                     return (Track(id: track_id, name: track_name, preview_url: preview_url, album: album), rank)
                 }
@@ -85,9 +86,10 @@ class Curation: Identifiable, ObservableObject{
                 let album_name = try columns[10].string()
                 let album_type = try columns[11].string()
                 let total_tracks = try columns[12].int()
+                let image = try columns[13].string()
                 
                 
-                let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks)
+                let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks, image: image)
                 let track = Track(id: track_id, name: track_name, preview_url: preview_url, album: album)
                 
                 curationDict[id]?.tracksWithRanks.append((track, rank))
@@ -122,14 +124,14 @@ class Curation: Identifiable, ObservableObject{
     // adds track to DB and adds track to curation
     func addTrack(track: Track) async {
         // first add track to DB
-        track.addToDB()
+        await track.addToDB()
         // add track to curation
-        Query.executeQuery(query: "addTrackToCuration", params: [self.id.uuidString, track.id, 0])
+        Query.executeQuery(query: "add_track_to_curation", params: [self.id.uuidString, track.id, 0])
     }
     
     // adds curation to DB
     func addToDB() async{
-        Query.executeQuery(query: "addCuration", params: [self.id.uuidString, self.title, self.description, self.color.toHex(), self.numLikes])
+        Query.executeQuery(query: "add_curation", params: [self.id.uuidString, self.title, self.description, self.color.toHex(), self.numLikes])
     }
     
     

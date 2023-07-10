@@ -49,8 +49,7 @@ struct CurationListRow: View {
                         isExpanded = true// communicate to parent that view is expanded
                         childExpanded = true// change this view accordingly
                         selectedItemIdx = itemIdx
-                        print("tap!")
-                        
+                        print("Expanding Curation!")
                     }
                     
                 }
@@ -60,7 +59,7 @@ struct CurationListRow: View {
                 Spacer().frame(height: childExpanded ? 80 : 0)
                 // "Curation", (+),  (x)
                 HStack(alignment: .top){
-                    Text(childExpanded ? "Curation by \(userName)" : "Curation")
+                    HStack(spacing: 0){Text("Curation"); if childExpanded{Text(" by \(userName)")}}
                         .italic()
                         .opacity(0.75)
                         .padding(1)
@@ -154,7 +153,7 @@ struct CurationListRow: View {
                     
                 }
                 else{
-//                    MiniAlbumScrollView(tracks: tracksWithRanks.map{$0.0})
+                    MiniAlbumScrollView(tracks: tracksWithRanks.map{$0.0})
                     Spacer()
                     // User Name + Genres
                     HStack(spacing: 0){
@@ -283,9 +282,20 @@ struct ExpandedTrackListItem: View {
         HStack{
             let track = curation.tracksWithRanks[idx].0
             let rank = curation.tracksWithRanks[idx].1
-            Image("placeholder")
-                .resizable()
-                .frame(width: 50, height: 50)
+            AsyncImage(url: URL(string: track.album.image)){ phase in
+                switch phase{
+                case .empty: ProgressView()
+                case .failure(let error): Text("Error \(error.localizedDescription)")
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
+                @unknown default: EmptyView()
+                }
+                
+            }
+                
             VStack(alignment: .leading){
                 Text(track.name)
                     .font(.body)

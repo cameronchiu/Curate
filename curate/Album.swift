@@ -1,34 +1,16 @@
 import Foundation
 import PostgresClientKit
 
-struct Album: Codable{
+struct Album: Decodable{
     
     static func get(byId id: String){
         
     }
     
     func addToDB(){
-        do{
-            var config = PostgresClientKit.ConnectionConfiguration()
-            config.host = "34.27.158.99"
-            config.database = "curate_db"
-            config.user = "basic"
-            config.credential = .scramSHA256(password: "/]M~fgUo0sj`I?LI")
-            let connection = try PostgresClientKit.Connection(configuration: config)
-            let text = """
-                INSERT INTO albums (id, name, album_type, total_tracks)
-                VALUES ($1, $2, $3, $4);
-                """
-            let statement = try connection.prepareStatement(text: text)
-            
-            let _ = try statement.execute(parameterValues: [self.id, self.name, self.album_type, self.total_tracks])
-            
-        }
-        catch{
-            print(error)
-        }
+        Query.executeQuery(query: "add_album", params: [self.id, self.name, self.album_type, self.total_tracks, self.image])
     }
-    
+
     let id: String
     let name: String
     let album_type: String
@@ -38,24 +20,38 @@ struct Album: Codable{
         return("https://open.spotify.com/album/\(id)")
     }
     let artists: [Artist]
-    let images: [ImgObj]
+    let image: String
     
     private enum CodingKeys: String, CodingKey{
         case id
         case name
         case album_type
         case total_tracks
-//        case release_date
-        case artists
         case images
+        case artists
     }
     
-    init(id : String, name: String, album_type: String, total_tracks: Int){
+    // Decoder Init
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        album_type = try container.decode(String.self, forKey: .album_type)
+        total_tracks = try container.decode(Int.self, forKey: .total_tracks)
+        artists = try container.decode([Artist].self, forKey: .artists)
+        let images = try container.decode([ImgObj].self, forKey: .images)
+        image = images[0].url
+
+
+    }
+    
+    // System init
+    init(id : String, name: String, album_type: String, total_tracks: Int, image: String){
         self.id = id
         self.name = name
         self.album_type = album_type
         self.total_tracks = total_tracks
         self.artists = []
-        self.images = []
+        self.image = image
     }
 }

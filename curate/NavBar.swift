@@ -14,7 +14,6 @@ struct NavBar: View {
 
     static let pages: [String] = ["ExplorePage", "HomePage"]
     let content = ContentStream()
-//    let query = Query()
     @State private var isExpanded = false
     @StateObject var spotifyController = SpotifyController()
     @State private var selectedTab = "RequestsPage"

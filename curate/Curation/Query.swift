@@ -50,13 +50,23 @@ struct Query{
         
         /// WRITE
         // Adds a track to a curation
-        "addTrackToCuration" : """
+        "add_track_to_curation" : """
                 INSERT INTO curationTracks (curation_id, track_id, rank)
                 VALUES ($1, $2, $3);
         """,
         
-        "addCuration" : """
+        "add_curation" : """
                 INSERT INTO curations (id, title, description, color, numLikes)
+                VALUES ($1, $2, $3, $4, $5);
+        """,
+        
+        "add_track" : """
+                INSERT INTO tracks (id, name, album_id, preview_url)
+                VALUES ($1, $2, $3, $4);
+        """,
+        
+        "add_album": """
+                INSERT INTO albums (id, name, album_type, total_tracks, image)
                 VALUES ($1, $2, $3, $4, $5);
         """,
         
@@ -66,11 +76,20 @@ struct Query{
         "tracksForCuration" : """
                 SELECT CurationTracks.rank,
                        Tracks.id as track_id, Tracks.name as track_name, Tracks.preview_url,
-                       Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks
+                       Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks, Albums.image
                 FROM CurationTracks
                 JOIN Tracks ON CurationTracks.track_id = Tracks.id
                 JOIN Albums ON Tracks.album_id = Albums.id
                 WHERE CurationTracks.curation_id = $1
+        """,
+        
+        // Fetches X tracks (for debugging)
+        "tracks_lim" : """
+                SELECT Tracks.id as track_id, Tracks.name as track_name, Tracks.preview_url,
+                       Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks, Albums.image
+                FROM Tracks
+                JOIN Albums ON Tracks.album_id = Albums.id
+                LIMIT $1
         """,
         
         // Fetches all curations with track with album info
@@ -78,7 +97,7 @@ struct Query{
                 SELECT Curations.id, Curations.title, Curations.description, Curations.color, Curations.numLikes,
                        CurationTracks.rank,
                        Tracks.id as track_id, Tracks.name as track_name, Tracks.preview_url,
-                       Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks
+                       Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks, Albums.image
                 FROM Curations
                 LEFT JOIN CurationTracks ON Curations.id = CurationTracks.curation_id
                 LEFT JOIN Tracks ON CurationTracks.track_id = Tracks.id

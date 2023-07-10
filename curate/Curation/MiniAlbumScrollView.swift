@@ -11,20 +11,31 @@ import Foundation
 
 struct MiniAlbumScrollView: View {
     
-    var tracks: [Song]
+    var tracks: [Track]
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
-                ForEach(tracks) { track in
+                ForEach(tracks, id: \.self.id) { track in
                     VStack {
                         GeometryReader { geo in
-                            Image(track.albumCoverString)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100)
-                                .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - UIScreen.main.bounds.width/3) / 8), axis: (x: 0, y: 1, z: 0))
-                                .frame(width: 200, height: 120)
+                            AsyncImage(url: URL(string: track.album.image)){ phase in
+                                switch phase{
+                                case .empty: ProgressView()
+                                case .failure(let error): Text("Error \(error.localizedDescription)")
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 100, height: 100)
+                                        .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - UIScreen.main.bounds.width/3) / 8), axis: (x: 0, y: 1, z: 0))
+                                        .frame(width: 200, height: 120)
+                                @unknown default: EmptyView()
+                                }
+                                
+                                
+                            }
+                                
                         }
                         .frame(width: 95, height: 120)
                     }
@@ -38,6 +49,6 @@ struct MiniAlbumScrollView: View {
 
 struct MiniAlbumScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniAlbumScrollView(tracks: DataService.songRecs)
+        MiniAlbumScrollView(tracks: Track.grabXTracks(lim: 10))
     }
 }

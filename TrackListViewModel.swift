@@ -44,7 +44,7 @@ struct TrackViewModel {
     
     
     var albumCoverURL: URL? {
-        URL(string: track.album.images.first?.url ?? "")
+        URL(string: track.album.image)
     }
     
     
