@@ -11,31 +11,41 @@ struct BuildCurationView: View {
     
     @Binding var isPresented: Bool
     var content: ContentStream // passed in from Explore
-    @State private var name: String = ""
-    @State private var description: String = ""
-    @State private var trackName: String = ""
-    @State private var trackList: [Track] = []
+    @StateObject var newCuration: Curation = Curation()
+//    @State private var name: String = ""
+//    @State private var description: String = ""
+//    @State private var trackName: String = ""
+//    @State private var trackList: [Track] = []
+    @State private var trackSearchPresented = false
     
     var body: some View {
-        VStack {
-            TextField("Name", text: $name)
+        VStack(alignment: .center){
+            TextField("Title", text: $newCuration.title)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             
-            TextField("Description", text: $description)
+            TextField("Description", text: $newCuration.description)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             
-            HStack {
-                TextField("Track Name", text: $trackName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                
-                Button(action: {
-                    addTrack()
-                }) {
-                    Text("Add Track")
-                }
+            
+            Button(){
+                trackSearchPresented = true
+                                
+            }label:{
+                Text("Add Track")
+                    .font(.headline)
+                    .fontWeight(.heavy)
+                    .foregroundColor(Color("bgColor"))
             }
+            .padding()
+            .background(
+                Rectangle()
+                    .foregroundColor(Color("fgColor"))
+                    .cornerRadius(20)
+            )
             
-            List(trackList, id: \.id) { track in
+      
+            
+            List(newCuration.tracksWithRanks, id: \.self.0.id) { track, _ in
                 Text(track.name)
             }
             
@@ -43,9 +53,24 @@ struct BuildCurationView: View {
                 saveCuration()
             }) {
                 Text("Save Curation")
+                    .font(.headline)
+                    .fontWeight(.heavy)
+                    .foregroundColor(Color("bgColor"))
             }
+            .padding()
+            .background(
+                Rectangle()
+                    .foregroundColor(Color("fgColor"))
+                    .cornerRadius(20)
+            )
+            
         }
         .padding()
+        
+        // Track Search
+        .sheet(isPresented: $trackSearchPresented){
+            SongSearch(curation: newCuration, directAdd: false, isPresented: $trackSearchPresented)
+        }
     }
     
     private func addTrack() {
@@ -55,11 +80,10 @@ struct BuildCurationView: View {
     }
     
     private func saveCuration() {
-        let curation = Curation(title: name, description: description, tracks: trackList)
-        content.stream.append(.curation(curation))
+        content.stream.append(.curation(newCuration))
         isPresented = false
         Task.init{
-            await curation.addToDB()
+            await newCuration.addToDB()
         }
         
     }

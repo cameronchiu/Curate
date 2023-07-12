@@ -4,6 +4,7 @@ import SpotifyiOS
 import Combine
 
 class SpotifyController: NSObject, ObservableObject {
+    
     let spotifyClientID = "30d5873028d143c8aea897d5b319c60e"
     let spotifyRedirectURL = URL(string:"curate://")!
     

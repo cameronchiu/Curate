@@ -13,10 +13,12 @@ struct NavBar: View {
     
 
     static let pages: [String] = ["ExplorePage", "HomePage"]
-    let content = ContentStream()
+    var content = ContentStream()
     @State private var isExpanded = false
-    @StateObject var spotifyController = SpotifyController()
-    @State private var selectedTab = "RequestsPage"
+    @EnvironmentObject var spotify: Spotify
+    @State private var selectedTab = "ExplorePage"
+    
+
     var body: some View {
         
         TabView(selection: $selectedTab){
@@ -34,10 +36,10 @@ struct NavBar: View {
                     }
                     .tag("HomePage")
                     .onOpenURL { url in
-                        spotifyController.setAccessToken(from: url)
+                        spotify.controller.setAccessToken(from: url)
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification), perform: { _ in
-                        spotifyController.connect()
+                        spotify.controller.connect()
                     })
             }
             .toolbarBackground(Color("fgColor"), for: .navigationBar)
@@ -46,7 +48,7 @@ struct NavBar: View {
             
         }
         .accentColor(Color("fgColor"))
-        .environmentObject(spotifyController)
+        
         
 
     }

@@ -32,9 +32,10 @@ class Curation: Identifiable, ObservableObject{
                     let album_type = try columns[6].string()
                     let total_tracks = try columns[7].int()
                     let image = try columns[8].string()
+                    let all_artists = try columns[9].string()
                     
                     // album object
-                    let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks, image: image)
+                    let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks, image: image, all_artists: all_artists)
                     
                     return (Track(id: track_id, name: track_name, preview_url: preview_url, album: album), rank)
                 }
@@ -54,6 +55,7 @@ class Curation: Identifiable, ObservableObject{
     // takes in a cursor of curation rows and returns a list of curation objects
     static func parseCurations(cursor: Cursor) throws -> [Curation]{
         var curationDict: [String : Curation] = [:]
+
         for row in cursor {
             
             let columns = try row.get().columns
@@ -87,9 +89,10 @@ class Curation: Identifiable, ObservableObject{
                 let album_type = try columns[11].string()
                 let total_tracks = try columns[12].int()
                 let image = try columns[13].string()
+                let all_artists = try columns[14].string()
                 
                 
-                let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks, image: image)
+                let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks, image: image, all_artists: all_artists)
                 let track = Track(id: track_id, name: track_name, preview_url: preview_url, album: album)
                 
                 curationDict[id]?.tracksWithRanks.append((track, rank))
@@ -134,6 +137,17 @@ class Curation: Identifiable, ObservableObject{
         Query.executeQuery(query: "add_curation", params: [self.id.uuidString, self.title, self.description, self.color.toHex(), self.numLikes])
     }
     
+    // adds Track object to Curation object
+    func addToObj(track: Track) {
+        for (track_, _) in self.tracksWithRanks{
+            if(track_.id == track.id) {
+                print("Duplicate track addition")
+                return
+            }
+        }
+        self.tracksWithRanks.append((track, 0))
+    }
+    
     
     var id: UUID
     var title: String
@@ -156,6 +170,7 @@ class Curation: Identifiable, ObservableObject{
         self.color = UIColor(hex: UInt32(color))
     }
     
+    // basic
     init(title: String, description: String, tracks: [Track]){
         self.id = UUID()
         self.title = title
@@ -164,6 +179,18 @@ class Curation: Identifiable, ObservableObject{
         self.tags = [Genre("Any")]
         self.numLikes = 0
         self.color = UIColor(Color.black)
+    }
+    
+    // shell
+    init(){
+        self.id = UUID()
+        self.title = ""
+        self.description = ""
+        self.tracksWithRanks = [] // to be filled immediately after
+        self.tags = []
+        self.numLikes = 0
+        self.color = UIColor(Color.black)
+        
     }
     
     

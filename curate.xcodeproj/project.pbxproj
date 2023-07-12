@@ -37,7 +37,6 @@
 		4E3872ED2A4659B600CDABD6 /* GenreSearchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3872EC2A4659B600CDABD6 /* GenreSearchList.swift */; };
 		4E3872EF2A465A3F00CDABD6 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3872EE2A465A3F00CDABD6 /* TitleView.swift */; };
 		4E3872F32A4667F400CDABD6 /* UserCurationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3872F22A4667F400CDABD6 /* UserCurationsView.swift */; };
-		4EA95AB42A4EA68600EE11FF /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA95AB32A4EA68600EE11FF /* Spotify.swift */; };
 		4EA95AB62A4EA81700EE11FF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA95AB52A4EA81700EE11FF /* AVFoundation.framework */; };
 		4EA95AB92A4EAC7D00EE11FF /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA95AA92A4EA1E600EE11FF /* SpotifyiOS.framework */; };
 		4EA95ABE2A4EACEB00EE11FF /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA95AB72A4EAB4A00EE11FF /* SpotifyiOS.xcframework */; };
@@ -56,6 +55,9 @@
 		4EA95AD92A58E0CD00EE11FF /* ImgObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA95AD82A58E0CD00EE11FF /* ImgObj.swift */; };
 		4ECD338A2A59ED9600A8BC4C /* BuildCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECD33892A59ED9600A8BC4C /* BuildCurationView.swift */; };
 		4ECD338E2A5B5FF400A8BC4C /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECD338D2A5B5FF400A8BC4C /* Query.swift */; };
+		4ECD33932A5CA0B100A8BC4C /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECD33922A5CA0B100A8BC4C /* Spotify.swift */; };
+		4ECD33972A5D0CBA00A8BC4C /* BlurredTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECD33962A5D0CBA00A8BC4C /* BlurredTrackView.swift */; };
+		4ECD33992A5F286100A8BC4C /* BlurredAlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECD33982A5F286100A8BC4C /* BlurredAlbumsView.swift */; };
 		4ED7984C2A46A8D9002E1529 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7984B2A46A8D9002E1529 /* Recommendation.swift */; };
 		4ED7984E2A46A929002E1529 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7984D2A46A929002E1529 /* Song.swift */; };
 		4ED798512A46AB1A002E1529 /* Curation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED798502A46AB1A002E1529 /* Curation.swift */; };
@@ -112,7 +114,6 @@
 		4E3872F22A4667F400CDABD6 /* UserCurationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationsView.swift; sourceTree = "<group>"; };
 		4EA95AA82A4EA0C700EE11FF /* curate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "curate-Bridging-Header.h"; sourceTree = "<group>"; };
 		4EA95AA92A4EA1E600EE11FF /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyiOS.framework; path = "ios-sdk-1.2.3/SpotifyiOS.framework"; sourceTree = SOURCE_ROOT; };
-		4EA95AB32A4EA68600EE11FF /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
 		4EA95AB52A4EA81700EE11FF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4EA95AB72A4EAB4A00EE11FF /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SpotifyiOS.xcframework; path = "../../../../../Downloads/ios-sdk-1.2.3/SpotifyiOS.xcframework"; sourceTree = "<group>"; };
 		4EA95AC12A4F46EC00EE11FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +129,9 @@
 		4EA95AD82A58E0CD00EE11FF /* ImgObj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgObj.swift; sourceTree = "<group>"; };
 		4ECD33892A59ED9600A8BC4C /* BuildCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildCurationView.swift; sourceTree = "<group>"; };
 		4ECD338D2A5B5FF400A8BC4C /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		4ECD33922A5CA0B100A8BC4C /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
+		4ECD33962A5D0CBA00A8BC4C /* BlurredTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredTrackView.swift; sourceTree = "<group>"; };
+		4ECD33982A5F286100A8BC4C /* BlurredAlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredAlbumsView.swift; sourceTree = "<group>"; };
 		4ED7984B2A46A8D9002E1529 /* Recommendation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendation.swift; sourceTree = "<group>"; };
 		4ED7984D2A46A929002E1529 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		4ED798502A46AB1A002E1529 /* Curation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curation.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 		4E04AD1A2A4E6B5B00ABFB13 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				4EA95AC32A4F4B7800EE11FF /* SceneDelegate.swift */,
 				4EA95AC52A4F601000EE11FF /* ViewController.swift */,
 				4EA95AC12A4F46EC00EE11FF /* AppDelegate.swift */,
 				4E3543162A48AF56002EBBB2 /* UIImage+Extension.swift */,
@@ -273,6 +278,7 @@
 				4E04AD002A4BC81400ABFB13 /* Fonts */,
 				4E3872CF2A4606DB00CDABD6 /* curateApp.swift */,
 				4EA95AC72A4F77FC00EE11FF /* SpotifyController.swift */,
+				4ECD33922A5CA0B100A8BC4C /* Spotify.swift */,
 				4E3872EE2A465A3F00CDABD6 /* TitleView.swift */,
 				4E04AD192A4E6B1F00ABFB13 /* Request */,
 				4E04AD182A4E6AE900ABFB13 /* Curation */,
@@ -293,12 +299,12 @@
 				4ED7984B2A46A8D9002E1529 /* Recommendation.swift */,
 				4ED798522A46B5E0002E1529 /* User.swift */,
 				4E3872E82A46560800CDABD6 /* NavBar.swift */,
+				4ECD33982A5F286100A8BC4C /* BlurredAlbumsView.swift */,
 				4ED7984D2A46A929002E1529 /* Song.swift */,
 				4ECD338F2A5B6BCC00A8BC4C /* Search */,
-				4EA95AB32A4EA68600EE11FF /* Spotify.swift */,
 				4E04AD252A4E722100ABFB13 /* Constants.swift */,
-				4EA95AC32A4F4B7800EE11FF /* SceneDelegate.swift */,
 				4EA95ACB2A53409C00EE11FF /* TrackListViewModel.swift */,
+				4ECD33962A5D0CBA00A8BC4C /* BlurredTrackView.swift */,
 			);
 			path = curate;
 			sourceTree = "<group>";
@@ -467,6 +473,7 @@
 				4ECD338A2A59ED9600A8BC4C /* BuildCurationView.swift in Sources */,
 				4EA95AC42A4F4B7800EE11FF /* SceneDelegate.swift in Sources */,
 				4ECD338E2A5B5FF400A8BC4C /* Query.swift in Sources */,
+				4ECD33992A5F286100A8BC4C /* BlurredAlbumsView.swift in Sources */,
 				4E3872ED2A4659B600CDABD6 /* GenreSearchList.swift in Sources */,
 				4EA95AD02A53417300EE11FF /* String+Extensions.swift in Sources */,
 				4EA95AC82A4F77FC00EE11FF /* SpotifyController.swift in Sources */,
@@ -479,14 +486,15 @@
 				4EA95AC22A4F46EC00EE11FF /* AppDelegate.swift in Sources */,
 				4E04ACFF2A4BB4CA00ABFB13 /* AddMenuViewModel.swift in Sources */,
 				4E3872D22A4606DB00CDABD6 /* RequestsView.swift in Sources */,
-				4EA95AB42A4EA68600EE11FF /* Spotify.swift in Sources */,
 				4E04AD142A4E539800ABFB13 /* Test.swift in Sources */,
 				4E3872E52A460A9A00CDABD6 /* Genre.swift in Sources */,
+				4ECD33972A5D0CBA00A8BC4C /* BlurredTrackView.swift in Sources */,
 				4E3872D02A4606DB00CDABD6 /* curateApp.swift in Sources */,
 				4EA95AD92A58E0CD00EE11FF /* ImgObj.swift in Sources */,
 				4ED7984E2A46A929002E1529 /* Song.swift in Sources */,
 				4E3872EF2A465A3F00CDABD6 /* TitleView.swift in Sources */,
 				4E3543172A48AF56002EBBB2 /* UIImage+Extension.swift in Sources */,
+				4ECD33932A5CA0B100A8BC4C /* Spotify.swift in Sources */,
 				4E04AD062A4C908600ABFB13 /* MustHear.swift in Sources */,
 				4E3872EB2A46587A00CDABD6 /* RequestListRow.swift in Sources */,
 				4EA95AC62A4F601000EE11FF /* ViewController.swift in Sources */,

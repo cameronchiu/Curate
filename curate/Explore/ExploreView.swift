@@ -10,7 +10,7 @@ import SwiftUIIntrospect
 
 struct ExploreView: View {
     
-    @EnvironmentObject var spotifyController: SpotifyController
+    @EnvironmentObject var spotify: Spotify
     @ObservedObject var content: ContentStream
     @Binding var isExpanded: Bool
     @State private var selectedItemIdx: Int = -1

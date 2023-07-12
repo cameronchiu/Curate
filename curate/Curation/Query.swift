@@ -66,8 +66,8 @@ struct Query{
         """,
         
         "add_album": """
-                INSERT INTO albums (id, name, album_type, total_tracks, image)
-                VALUES ($1, $2, $3, $4, $5);
+                INSERT INTO albums (id, name, album_type, total_tracks, image, all_artists)
+                VALUES ($1, $2, $3, $4, $5, $6);
         """,
         
         
@@ -77,6 +77,7 @@ struct Query{
                 SELECT CurationTracks.rank,
                        Tracks.id as track_id, Tracks.name as track_name, Tracks.preview_url,
                        Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks, Albums.image
+                       Albums.all_artists
                 FROM CurationTracks
                 JOIN Tracks ON CurationTracks.track_id = Tracks.id
                 JOIN Albums ON Tracks.album_id = Albums.id
@@ -86,7 +87,8 @@ struct Query{
         // Fetches X tracks (for debugging)
         "tracks_lim" : """
                 SELECT Tracks.id as track_id, Tracks.name as track_name, Tracks.preview_url,
-                       Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks, Albums.image
+                       Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks, Albums.image,
+                       Albums.all_artists
                 FROM Tracks
                 JOIN Albums ON Tracks.album_id = Albums.id
                 LIMIT $1
@@ -97,7 +99,8 @@ struct Query{
                 SELECT Curations.id, Curations.title, Curations.description, Curations.color, Curations.numLikes,
                        CurationTracks.rank,
                        Tracks.id as track_id, Tracks.name as track_name, Tracks.preview_url,
-                       Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks, Albums.image
+                       Albums.id as album_id, Albums.name as album_name, Albums.album_type, Albums.total_tracks, Albums.image,
+                       Albums.all_artists
                 FROM Curations
                 LEFT JOIN CurationTracks ON Curations.id = CurationTracks.curation_id
                 LEFT JOIN Tracks ON CurationTracks.track_id = Tracks.id

@@ -20,12 +20,12 @@ struct Artist: Codable{
             config.credential = .scramSHA256(password: "/]M~fgUo0sj`I?LI")
             let connection = try PostgresClientKit.Connection(configuration: config)
             let text = """
-                INSERT INTO artists (id, name, href, url)
-                VALUES ($1, $2, $3, $4);
+                INSERT INTO artists (id, name, url)
+                VALUES ($1, $2, $3);
                 """
             let statement = try connection.prepareStatement(text: text)
             
-            let _ = try statement.execute(parameterValues: [self.id, self.name, self.href, self.url])
+            let _ = try statement.execute(parameterValues: [self.id, self.name, self.url])
             
         }
         catch{
@@ -35,7 +35,6 @@ struct Artist: Codable{
     
     let id: String
     let name: String
-    let href: String
     var url: String{
         return("https://open.spotify.com/artist/\(id)")
     }
@@ -43,7 +42,11 @@ struct Artist: Codable{
     private enum CodingKeys: String, CodingKey{
         case id
         case name
-        case href
+    }
+    
+    init(id: String, name: String){
+        self.id = id
+        self.name = name
     }
     
     

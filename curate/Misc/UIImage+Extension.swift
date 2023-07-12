@@ -60,6 +60,21 @@ extension UIColor {
         return hexValue
     }
     
+    func assessTextColor() -> UIColor {
+        guard let components = self.cgColor.components, components.count >= 3 else {
+            return .black // Default to black if color cannot be assessed
+        }
+        
+        let red = components[0]
+        let green = components[1]
+        let blue = components[2]
+        
+        let luminance = (red * 299 + green * 587 + blue * 114) / 1000
+        
+        return luminance > 0.5 ? .black : .white
+    }
+    
+    
 }
 
 

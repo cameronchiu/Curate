@@ -5,16 +5,16 @@ import Combine
 struct SongSearch: View {
     
     var curation: Curation
+    var directAdd: Bool
     @Binding var isPresented: Bool
-    @EnvironmentObject var spotifyController: SpotifyController
-    @StateObject var trackListVM: TrackListViewModel
+    @EnvironmentObject var spotify: Spotify
     @State private var searchText: String = ""
     @FocusState private var keyboardFocused: Bool
     
     
     var body : some View{
         NavigationView {
-            List(trackListVM.tracks, id: \.track.id) { track in
+            List(spotify.searcher.tracks, id: \.track.id) { track in
                 HStack {
                     AsyncImage(url: track.albumCoverURL
                                , content: { image in
@@ -42,12 +42,14 @@ struct SongSearch: View {
                     // lower sheet
                     isPresented = false
                     
-                    // first add to object
-                    curation.tracksWithRanks.append((track.track,0))
+                    // first add to object if it doesn't already exist
+                    curation.addToObj(track: track.track)
                     
-                    // async
-                    Task.init{
-                        await curation.addTrack(track: track.track)
+                    if directAdd{
+                        Task.init{
+                            await curation.addTrack(track: track.track)
+                        }
+                        
                     }
                     
                     
@@ -56,9 +58,9 @@ struct SongSearch: View {
                 .searchable(text: $searchText)
                 .onChange(of: searchText) { value in
                     if !value.isEmpty &&  value.count >= 2 {
-                        trackListVM.search(name: value)
+                        spotify.searcher.search(name: value)
                     } else {
-                        trackListVM.tracks.removeAll()
+                        spotify.searcher.tracks.removeAll()
                     }
                 }
                 .focused($keyboardFocused)
@@ -77,8 +79,7 @@ struct SongSearch: View {
 
 struct SongSearch_Previews: PreviewProvider {
     static var previews: some View {
-        let spotifyController = SpotifyController()
         let curationExample = Curation.getAllCurations()[0]
-        SongSearch(curation: curationExample, isPresented: .constant(true), trackListVM: TrackListViewModel(spotifyController))
+        SongSearch(curation: curationExample, directAdd: true, isPresented: .constant(true))
     }
 }

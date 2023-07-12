@@ -6,7 +6,6 @@ struct Track: Decodable {
     let id: String
     let name: String
     let album: Album
-    let artists: [Artist]
     let preview_url: String?
     var url: String{
         return("https://open.spotify.com/track/\(id)")
@@ -28,7 +27,6 @@ struct Track: Decodable {
         case id
         case name
         case album
-        case artists
         case preview_url
     }
 
@@ -38,7 +36,6 @@ struct Track: Decodable {
         self.name = name
         self.preview_url = preview_url
         self.album = album
-        self.artists = [] // TODO
     }
     
     static func grabXTracks(lim: Int) -> [Track]{
@@ -59,9 +56,10 @@ struct Track: Decodable {
                     let album_type = try columns[5].string()
                     let total_tracks = try columns[6].int()
                     let image = try columns[7].string()
+                    let all_artists = try columns[8].string()
                     
                     // album object
-                    let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks, image: image)
+                    let album = Album(id: album_id, name: album_name, album_type: album_type, total_tracks: total_tracks, image: image, all_artists: all_artists)
                     return Track(id: track_id, name: track_name, preview_url: preview_url, album: album)
                 }
                 
@@ -75,10 +73,6 @@ struct Track: Decodable {
     }
     
     func addToDB() async {
-        // Adds all artists to DB
-        for artist in (self.artists) {
-            artist.addToDB()
-        }
         
         // Adds album to DB
         self.album.addToDB()

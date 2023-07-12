@@ -8,7 +8,7 @@ struct Album: Decodable{
     }
     
     func addToDB(){
-        Query.executeQuery(query: "add_album", params: [self.id, self.name, self.album_type, self.total_tracks, self.image])
+        Query.executeQuery(query: "add_album", params: [self.id, self.name, self.album_type, self.total_tracks, self.image, self.all_artists])
     }
 
     let id: String
@@ -19,7 +19,7 @@ struct Album: Decodable{
     var url: String{
         return("https://open.spotify.com/album/\(id)")
     }
-    let artists: [Artist]
+    let all_artists: String
     let image: String
     
     private enum CodingKeys: String, CodingKey{
@@ -27,8 +27,8 @@ struct Album: Decodable{
         case name
         case album_type
         case total_tracks
-        case images
         case artists
+        case images
     }
     
     // Decoder Init
@@ -38,7 +38,8 @@ struct Album: Decodable{
         name = try container.decode(String.self, forKey: .name)
         album_type = try container.decode(String.self, forKey: .album_type)
         total_tracks = try container.decode(Int.self, forKey: .total_tracks)
-        artists = try container.decode([Artist].self, forKey: .artists)
+        let artists = try container.decode([Artist].self, forKey: .artists)
+        self.all_artists = String(artists.map{$0.name}.joined(separator: ", "))
         let images = try container.decode([ImgObj].self, forKey: .images)
         image = images[0].url
 
@@ -46,12 +47,12 @@ struct Album: Decodable{
     }
     
     // System init
-    init(id : String, name: String, album_type: String, total_tracks: Int, image: String){
+    init(id : String, name: String, album_type: String, total_tracks: Int, image: String, all_artists: String){
         self.id = id
         self.name = name
         self.album_type = album_type
         self.total_tracks = total_tracks
-        self.artists = []
+        self.all_artists = all_artists
         self.image = image
     }
 }

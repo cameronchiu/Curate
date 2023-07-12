@@ -6,6 +6,8 @@ enum NetworkError: Error {
 }
 
 extension SpotifyController{
+    
+    
     // Function to perform a search for tracks
     func getTracks(searchTerm: String, completion: @escaping (Result<[Track], Error>) -> Void) {
         if let token = self.accessToken {

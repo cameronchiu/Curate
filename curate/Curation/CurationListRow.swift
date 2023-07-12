@@ -11,7 +11,7 @@ import UIImageColors
 struct CurationListRow: View {
     
    
-    @EnvironmentObject var spotifyController: SpotifyController
+    @EnvironmentObject var spotify: Spotify
     var itemIdx: Int
     @Binding var selectedItemIdx: Int
     @Binding var isExpanded: Bool
@@ -19,7 +19,7 @@ struct CurationListRow: View {
     @State private var trackSearchPresented = false
     
     @ObservedObject var curation: Curation
-    @State var tracksWithRanks: [(Track, Int)] = []
+//    @State var tracksWithRanks: [(Track, Int)] = []
     @State var albumImgStrings: [String] = ["placeholder"]
     
     @State var buttonLiked = false
@@ -103,6 +103,7 @@ struct CurationListRow: View {
                     
                     
                 }
+                Spacer().frame(height: 20)
             
                 
                 // Title, Description
@@ -148,12 +149,13 @@ struct CurationListRow: View {
                     
                     // Track Search
                     .sheet(isPresented: $trackSearchPresented){
-                        SongSearch(curation: curation, isPresented: $trackSearchPresented, trackListVM: TrackListViewModel(spotifyController))
+                        SongSearch(curation: curation, directAdd: true, isPresented: $trackSearchPresented)
                     }
                     
                 }
                 else{
-                    MiniAlbumScrollView(tracks: tracksWithRanks.map{$0.0})
+                    Spacer()
+                    BlurredAlbumsView(tracks: curation.tracksWithRanks.map{$0.0})
                     Spacer()
                     // User Name + Genres
                     HStack(spacing: 0){
@@ -168,7 +170,6 @@ struct CurationListRow: View {
                 }
 
             }
-            .padding()
             
             
             // heart
@@ -229,8 +230,8 @@ struct CurationListRow: View {
             tags = curation.tags
             numLikes = curation.numLikes
             containerColor = curation.color
-            tracksWithRanks = curation.tracksWithRanks
-            textColor = assessTextColor(for: containerColor)
+//            tracksWithRanks = curation.tracksWithRanks
+            textColor = containerColor.assessTextColor()
             
         }
 
@@ -238,19 +239,7 @@ struct CurationListRow: View {
         
     }
     
-    func assessTextColor(for color: UIColor) -> UIColor {
-        guard let components = color.cgColor.components, components.count >= 3 else {
-            return .black // Default to black if color cannot be assessed
-        }
-        
-        let red = components[0]
-        let green = components[1]
-        let blue = components[2]
-        
-        let luminance = (red * 299 + green * 587 + blue * 114) / 1000
-        
-        return luminance > 0.5 ? .black : .white
-    }
+    
 
     
     
@@ -263,7 +252,7 @@ func TitleDescription(_ title: String, _ description: String, _ textColor: UICol
         .fontWeight(.bold)
         .font(.headline)
         .foregroundColor(Color(textColor))
-
+    Spacer().frame(height: 10)
     Text(description)
         .font(.caption)
         .foregroundColor(Color(textColor))
@@ -278,52 +267,7 @@ struct ExpandedTrackListItem: View {
     @State var buttonLiked: Bool = false
     
     var body: some View{
-    
-        HStack{
-            let track = curation.tracksWithRanks[idx].0
-            let rank = curation.tracksWithRanks[idx].1
-            AsyncImage(url: URL(string: track.album.image)){ phase in
-                switch phase{
-                case .empty: ProgressView()
-                case .failure(let error): Text("Error \(error.localizedDescription)")
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50)
-                @unknown default: EmptyView()
-                }
-                
-            }
-                
-            VStack(alignment: .leading){
-                Text(track.name)
-                    .font(.body)
-                    .fontWeight(.semibold)
-                Text(track.album.name)
-            }
-            .foregroundColor(Color(textColor))
-            Spacer()
-            VStack(alignment: .center){
-                Text("\(rank)")
-                    .font(.system(size: 9))
-                    .fontWeight(.bold)
-                    .lineLimit(1)
-                Button{
-                        buttonLiked.toggle()
-                        curation.tracksWithRanks[idx].1 += buttonLiked ? 1 : -1
-                    
-                }label:{
-                    Image(systemName: buttonLiked ? "heart.fill" : "heart")
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                }
-                .contentShape(RoundedRectangle(cornerRadius: 10))
-                
-                
-            }
-            .foregroundColor(Color(textColor))
-            
-        }
+        BlurredTrackView(track: curation.tracksWithRanks[idx].0)
     }
 }
 

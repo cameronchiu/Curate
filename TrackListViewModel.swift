@@ -7,7 +7,7 @@
 
 import Foundation
 
-@MainActor
+//@MainActor
 class TrackListViewModel: ObservableObject {
     
     var spotifyController: SpotifyController
@@ -49,6 +49,6 @@ struct TrackViewModel {
     
     
     var artist: String {
-        track.artists.first!.name
+        track.album.all_artists
     }
 }

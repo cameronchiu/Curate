@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct UserCurationsView: View {
-    @StateObject var spotifyController = SpotifyController()
+    @StateObject var spotify = Spotify()
     
     var body: some View {
         VStack{
             Button{
-                spotifyController.connect()
+                spotify.controller.connect()
                 
             }label:{
                 Text("Connect to Spotify")

@@ -1,13 +1,19 @@
-//import UIKit
-//import SwiftUI
 //
-//struct Spotify: UIViewControllerRepresentable {
-//    typealias UIViewControllerType = UIViewController
+//  Spotify.swift
+//  curate
 //
-//    func makeUIViewController(context: Context) -> UIViewController {
-//        let vc = ViewController()
-//        return vc
-//    }
+//  Created by Cameron Chiu on 7/10/23.
 //
-//    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-//}
+
+import Foundation
+import Combine
+
+class Spotify: ObservableObject{
+    var controller: SpotifyController
+    @Published var searcher: TrackListViewModel
+    
+    init(){
+        self.controller = SpotifyController()
+        self.searcher = TrackListViewModel(self.controller)
+    }
+}
